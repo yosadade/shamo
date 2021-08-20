@@ -38,7 +38,7 @@ class SignInPage extends StatelessWidget {
                 style: primaryTextStyle.copyWith(
                     fontSize: 16, fontWeight: medium)),
             SizedBox(
-              height: 2,
+              height: 12,
             ),
             Container(
               height: 50,
@@ -86,7 +86,7 @@ class SignInPage extends StatelessWidget {
                 style: primaryTextStyle.copyWith(
                     fontSize: 16, fontWeight: medium)),
             SizedBox(
-              height: 2,
+              height: 12,
             ),
             Container(
               height: 50,
@@ -101,7 +101,7 @@ class SignInPage extends StatelessWidget {
                 child: Row(
                   children: [
                     Image.asset(
-                      'assets/icon_email.png',
+                      'assets/icon_password.png',
                       width: 17,
                     ),
                     SizedBox(width: 16),

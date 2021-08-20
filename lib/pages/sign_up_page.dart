@@ -38,7 +38,7 @@ class SignUpPage extends StatelessWidget {
                 style: primaryTextStyle.copyWith(
                     fontSize: 16, fontWeight: medium)),
             SizedBox(
-              height: 2,
+              height: 12,
             ),
             Container(
               height: 50,
@@ -86,7 +86,7 @@ class SignUpPage extends StatelessWidget {
                 style: primaryTextStyle.copyWith(
                     fontSize: 16, fontWeight: medium)),
             SizedBox(
-              height: 2,
+              height: 12,
             ),
             Container(
               height: 50,
@@ -134,7 +134,7 @@ class SignUpPage extends StatelessWidget {
                 style: primaryTextStyle.copyWith(
                     fontSize: 16, fontWeight: medium)),
             SizedBox(
-              height: 2,
+              height: 12,
             ),
             Container(
               height: 50,
@@ -182,7 +182,7 @@ class SignUpPage extends StatelessWidget {
                 style: primaryTextStyle.copyWith(
                     fontSize: 16, fontWeight: medium)),
             SizedBox(
-              height: 2,
+              height: 12,
             ),
             Container(
               height: 50,
