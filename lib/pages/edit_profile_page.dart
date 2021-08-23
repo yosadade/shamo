@@ -4,6 +4,87 @@ import 'package:shamo/theme.dart';
 class EditProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Widget nameInput() {
+      return Container(
+        margin: EdgeInsets.only(top: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Name',
+              style: secondaryTextStyle.copyWith(
+                  fontSize: 13, fontWeight: regular),
+            ),
+            SizedBox(height: 4),
+            TextFormField(
+              style:
+                  primaryTextStyle.copyWith(fontSize: 16, fontWeight: regular),
+              decoration: InputDecoration(
+                  hintText: 'Alex keinnzal',
+                  hintStyle: subtitleTextStyle.copyWith(
+                      fontSize: 16, fontWeight: regular),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: subtitleColor))),
+            )
+          ],
+        ),
+      );
+    }
+
+    Widget userName() {
+      return Container(
+        margin: EdgeInsets.only(top: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Username',
+              style: secondaryTextStyle.copyWith(
+                  fontSize: 13, fontWeight: regular),
+            ),
+            SizedBox(height: 4),
+            TextFormField(
+              style:
+                  primaryTextStyle.copyWith(fontSize: 16, fontWeight: regular),
+              decoration: InputDecoration(
+                  hintText: '@alexkeinn',
+                  hintStyle: subtitleTextStyle.copyWith(
+                      fontSize: 16, fontWeight: regular),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: subtitleColor))),
+            )
+          ],
+        ),
+      );
+    }
+
+    Widget emailAddress() {
+      return Container(
+        margin: EdgeInsets.only(top: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Email Address',
+              style: secondaryTextStyle.copyWith(
+                  fontSize: 13, fontWeight: regular),
+            ),
+            SizedBox(height: 4),
+            TextFormField(
+              style:
+                  primaryTextStyle.copyWith(fontSize: 16, fontWeight: regular),
+              decoration: InputDecoration(
+                  hintText: 'alex.kein@gmail.com',
+                  hintStyle: subtitleTextStyle.copyWith(
+                      fontSize: 16, fontWeight: regular),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: subtitleColor))),
+            )
+          ],
+        ),
+      );
+    }
+
     Widget content() {
       return Container(
         width: double.infinity,
@@ -20,7 +101,10 @@ class EditProfilePage extends StatelessWidget {
                       image: AssetImage(
                     'assets/image_avatar.png',
                   ))),
-            )
+            ),
+            nameInput(),
+            userName(),
+            emailAddress()
           ],
         ),
       );
@@ -49,6 +133,7 @@ class EditProfilePage extends StatelessWidget {
             ),
           ]),
       body: content(),
+      resizeToAvoidBottomInset: false,
     );
   }
 }
