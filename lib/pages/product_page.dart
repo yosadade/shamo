@@ -14,11 +14,19 @@ class _ProductPageState extends State<ProductPage> {
     'assets/image_shoes.png'
   ];
 
-  int currentIndex = 0 ;
+  List familiarShoes = [
+    'assets/image_shoes.png',
+    'assets/image_shoes.png',
+    'assets/image_shoes.png',
+    'assets/image_shoes.png',
+    'assets/image_shoes.png',
+    'assets/image_shoes.png'
+  ];
+
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-
     Widget indicator(int index) {
       return Container(
         width: currentIndex == index ? 16 : 4,
@@ -31,8 +39,18 @@ class _ProductPageState extends State<ProductPage> {
       );
     }
 
-    Widget header() {
+    Widget familiarShoesCard(String imageUrl) {
+      return Container(
+        width: 54,
+        height: 54,
+        margin: EdgeInsets.only(right: 16),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            image: DecorationImage(image: AssetImage(imageUrl))),
+      );
+    }
 
+    Widget header() {
       int index = -1;
 
       return Column(
@@ -70,13 +88,12 @@ class _ProductPageState extends State<ProductPage> {
                     ))
                 .toList(),
             options: CarouselOptions(
-              initialPage: 0,
-              onPageChanged: (index, reason){
-                setState(() {
-                  currentIndex = index;
-                });
-              }
-            ),
+                initialPage: 0,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    currentIndex = index;
+                  });
+                }),
           ),
           SizedBox(height: 20),
           Row(
@@ -90,12 +107,172 @@ class _ProductPageState extends State<ProductPage> {
       );
     }
 
+    Widget content() {
+      int index = -1;
+
+      return Container(
+        margin: EdgeInsets.only(top: 17),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(24),
+          ),
+          color: backgroundColor1,
+        ),
+        child: Column(
+          children: [
+            // title
+            Container(
+                margin: EdgeInsets.only(
+                  top: defaultMargin,
+                  left: defaultMargin,
+                  right: defaultMargin,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Terrex Urban Low',
+                            style: primaryTextStyle.copyWith(
+                                fontSize: 18, fontWeight: semiBold),
+                          ),
+                          Text(
+                            'Hiking',
+                            style: secondaryTextStyle.copyWith(
+                                fontSize: 12, fontWeight: regular),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Image.asset(
+                      'assets/button_whislist.png',
+                      width: 46,
+                    )
+                  ],
+                )),
+            Container(
+              margin: EdgeInsets.only(
+                  top: 20, left: defaultMargin, right: defaultMargin),
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                  color: backgroundColor2,
+                  borderRadius: BorderRadius.circular(4)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Price starts from',
+                      style: primaryTextStyle.copyWith(
+                          fontSize: 14, fontWeight: regular)),
+                  Text('\$143,98',
+                      style: priceTextStyle.copyWith(
+                          fontSize: 16, fontWeight: semiBold))
+                ],
+              ),
+            ),
+            Container(
+                margin: EdgeInsets.only(
+                  top: defaultMargin,
+                  left: defaultMargin,
+                  right: defaultMargin,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Description',
+                      style: primaryTextStyle.copyWith(
+                          fontSize: 14, fontWeight: medium),
+                    ),
+                    SizedBox(height: 12),
+                    Text(
+                        'Unpaved trails and mixed surfaces are easy when you have the traction and support you need. Casual enough for the daily commute.',
+                        style: subtitleTextStyle.copyWith(
+                            fontSize: 14, fontWeight: light),
+                        textAlign: TextAlign.justify),
+                  ],
+                )),
+            Container(
+              margin: EdgeInsets.only(
+                top: defaultMargin,
+              ),
+              // width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: defaultMargin,
+                    ),
+                    child: Text(
+                      'Familiar Shoes',
+                      style: primaryTextStyle.copyWith(
+                          fontSize: 14, fontWeight: medium),
+                    ),
+                  ),
+                  SizedBox(height: 12),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: familiarShoes.map((image) {
+                        index++;
+                        return Container(
+                            margin: EdgeInsets.only(
+                                left: index == 0 ? defaultMargin : 0),
+                            child: familiarShoesCard(image));
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              margin: EdgeInsets.all(30),
+              child: Row(
+                children: [
+                  Container(
+                    width: 54,
+                    height: 54,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/button_chat.png')
+                      )
+                    ),
+                  ),
+                  SizedBox(width: 15),
+                  Expanded(
+                                      child: Container(
+                      height: 54,
+                      child: TextButton(
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)
+                          ),
+                          backgroundColor: primaryColor
+                        ),
+                        child: Text('Add to Cart', style: primaryTextStyle.copyWith(fontSize: 16, fontWeight: semiBold),),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: Color(0xffECECEF),
       body: Center(
           child: ListView(
         children: [
           header(),
+          content(),
         ],
       )),
     );
