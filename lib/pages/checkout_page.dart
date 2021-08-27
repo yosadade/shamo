@@ -56,7 +56,7 @@ class CheckoutPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Store Location',
@@ -75,7 +75,7 @@ class CheckoutPage extends StatelessWidget {
                           height: defaultMargin,
                         ),
                         Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Your Address',
@@ -95,6 +95,101 @@ class CheckoutPage extends StatelessWidget {
                   ],
                 ),
               ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: defaultMargin),
+            padding: EdgeInsets.all(29),
+            decoration: BoxDecoration(
+              color: backgroundColor4,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Payment Summary',
+                  style: primaryTextStyle.copyWith(
+                      fontSize: 16, fontWeight: medium),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Product',
+                        style: secondaryTextStyle.copyWith(
+                            fontSize: 12, fontWeight: regular)),
+                    Text('2 Items',
+                        style: primaryTextStyle.copyWith(
+                            fontSize: 14, fontWeight: medium)),
+                  ],
+                ),
+                SizedBox(
+                  height: 13,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Product Price',
+                        style: secondaryTextStyle.copyWith(
+                            fontSize: 12, fontWeight: regular)),
+                    Text('\$575.96',
+                        style: primaryTextStyle.copyWith(
+                            fontSize: 14, fontWeight: medium)),
+                  ],
+                ),
+                SizedBox(
+                  height: 13,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Shipping',
+                        style: secondaryTextStyle.copyWith(
+                            fontSize: 12, fontWeight: regular)),
+                    Text('Free',
+                        style: primaryTextStyle.copyWith(
+                            fontSize: 14, fontWeight: medium)),
+                  ],
+                ),
+                SizedBox(
+                  height: 11,
+                ),
+                Divider(thickness: 0.5, color: subtitleColor),
+                SizedBox(
+                  height: 11,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Total',
+                        style: priceTextStyle.copyWith(
+                            fontSize: 14, fontWeight: semiBold)),
+                    Text('Free',
+                        style: priceTextStyle.copyWith(
+                            fontSize: 14, fontWeight: semiBold)),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: defaultMargin,),
+                Divider(thickness: 0.5, color: subtitleColor),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: defaultMargin),
+            height: 50,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: primaryColor,
+              borderRadius: BorderRadius.circular(12)
+            ),
+            child: TextButton(
+              onPressed: (){
+                Navigator.pushNamedAndRemoveUntil(context, '/checkout-success', (route) => false);
+              },
+              child: Text('Checkout Now', style: primaryTextStyle.copyWith(fontSize: 16, fontWeight: semiBold)),
             ),
           )
         ],
