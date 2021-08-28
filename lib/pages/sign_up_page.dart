@@ -1,9 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shamo/providers/auth_provider.dart';
 import 'package:shamo/theme.dart';
+import 'package:shamo/widgets/loading_button.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
+  @override
+  _SignUpPageState createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  TextEditingController nameController = TextEditingController(text: '');
+
+  TextEditingController usernameController = TextEditingController(text: '');
+
+  TextEditingController emailController = TextEditingController(text: '');
+
+  TextEditingController passwordController = TextEditingController(text: '');
+
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    handleSignUp() async {
+      setState(() {
+        isLoading = true;
+      });
+
+      if (await authProvider.register(
+        name: nameController.text,
+        username: usernameController.text,
+        email: emailController.text,
+        password: passwordController.text,
+      )) {
+        Navigator.pushNamed(context, '/home');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          duration: Duration(milliseconds: 1000),
+          backgroundColor: alertColor,
+          content: Text(
+            'Gagal register!',
+            style: alertkTextStyle.copyWith(fontSize: 12, fontWeight: regular),
+            textAlign: TextAlign.center,
+          ),
+        ));
+      }
+      setState(() {
+        isLoading = false;
+      });
+    }
+
     Widget header() {
       return Container(
         margin: EdgeInsets.only(top: 30),
@@ -61,6 +109,7 @@ class SignUpPage extends StatelessWidget {
                       child: TextFormField(
                         style: primaryTextStyle.copyWith(
                             fontSize: 14, fontWeight: regular),
+                        controller: nameController,
                         decoration: InputDecoration.collapsed(
                             hintText: 'Your Full Name',
                             hintStyle: subtitleTextStyle.copyWith(
@@ -113,6 +162,7 @@ class SignUpPage extends StatelessWidget {
                             hintText: 'Your Username',
                             hintStyle: subtitleTextStyle.copyWith(
                                 fontSize: 14, fontWeight: regular)),
+                        controller: usernameController,
                       ),
                     )
                   ],
@@ -161,6 +211,7 @@ class SignUpPage extends StatelessWidget {
                             hintText: 'Your Email Address',
                             hintStyle: subtitleTextStyle.copyWith(
                                 fontSize: 14, fontWeight: regular)),
+                        controller: emailController,
                       ),
                     )
                   ],
@@ -210,6 +261,7 @@ class SignUpPage extends StatelessWidget {
                             hintText: 'Your Password',
                             hintStyle: subtitleTextStyle.copyWith(
                                 fontSize: 14, fontWeight: regular)),
+                        controller: passwordController,
                       ),
                     )
                   ],
@@ -222,26 +274,28 @@ class SignUpPage extends StatelessWidget {
     }
 
     Widget signUpButton() {
-      return Container(
-        height: 50,
-        width: double.infinity,
-        margin: EdgeInsets.only(top: 30),
-        child: TextButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/home');
-          },
-          style: TextButton.styleFrom(
-              backgroundColor: primaryColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              )),
-          child: Text('Sign Up',
-              style: primaryTextStyle.copyWith(
-                fontSize: 16,
-                fontWeight: medium,
-              )),
-        ),
-      );
+      return isLoading
+          ? LoadingButton()
+          : Container(
+              height: 50,
+              width: double.infinity,
+              margin: EdgeInsets.only(top: 30),
+              child: TextButton(
+                onPressed: () {
+                  handleSignUp();
+                },
+                style: TextButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    )),
+                child: Text('Sign Up',
+                    style: primaryTextStyle.copyWith(
+                      fontSize: 16,
+                      fontWeight: medium,
+                    )),
+              ),
+            );
     }
 
     Widget footer() {
@@ -272,25 +326,24 @@ class SignUpPage extends StatelessWidget {
     }
 
     return Scaffold(
-        backgroundColor: backgroundColor1,
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                header(),
-                fullNameInput(),
-                userNameInput(),
-                emailInput(),
-                passwordInput(),
-                signUpButton(),
-                Spacer(),
-                footer()
-              ],
-            ),
+      backgroundColor: backgroundColor1,
+      body: SafeArea(
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+          child: ListView(
+            // crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              header(),
+              fullNameInput(),
+              userNameInput(),
+              emailInput(),
+              passwordInput(),
+              signUpButton(),
+            ],
           ),
-        ));
+        ),
+      ),
+      bottomNavigationBar: footer(),
+    );
   }
 }
