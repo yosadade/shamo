@@ -1,9 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shamo/providers/auth_provider.dart';
 import 'package:shamo/theme.dart';
+import 'package:shamo/widgets/loading_button.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
+  @override
+  _SignInPageState createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  TextEditingController emailController = TextEditingController(text: '');
+
+  TextEditingController passwordController = TextEditingController(text: '');
+
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+
+
+    handleSignIn() async {
+      setState(() {
+        isLoading = true;
+      });
+
+      if (await authProvider.login(
+        email: emailController.text,
+        password: passwordController.text,
+      )) {
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          duration: Duration(milliseconds: 1000),
+          backgroundColor: alertColor,
+          content: Text(
+            'Gagal login!',
+            style: alertkTextStyle.copyWith(fontSize: 12, fontWeight: regular),
+            textAlign: TextAlign.center,
+          ),
+        ));
+      }
+
+      setState(() {
+        isLoading = false;
+      });
+    }
+
     Widget header() {
       return Container(
         margin: EdgeInsets.only(top: 30),
@@ -59,6 +104,7 @@ class SignInPage extends StatelessWidget {
                     SizedBox(width: 16),
                     Expanded(
                       child: TextFormField(
+                        controller: emailController,
                         style: primaryTextStyle.copyWith(
                             fontSize: 14, fontWeight: regular),
                         decoration: InputDecoration.collapsed(
@@ -107,6 +153,7 @@ class SignInPage extends StatelessWidget {
                     SizedBox(width: 16),
                     Expanded(
                       child: TextFormField(
+                        controller: passwordController,
                         obscureText: true,
                         style: primaryTextStyle.copyWith(
                             fontSize: 14, fontWeight: regular),
@@ -126,13 +173,13 @@ class SignInPage extends StatelessWidget {
     }
 
     Widget signInButton() {
-      return Container(
+      return isLoading ? LoadingButton() : Container(
         height: 50,
         width: double.infinity,
         margin: EdgeInsets.only(top: 30),
         child: TextButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/home');
+            handleSignIn();
           },
           style: TextButton.styleFrom(
               backgroundColor: primaryColor,
