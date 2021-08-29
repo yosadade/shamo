@@ -35,7 +35,7 @@ class ProductModel {
     updateAt = DateTime.parse(json['updateAt']);
     // array harus di map
     galleries = json['galleries']
-        .map((gallery) => GalleryModel.fromJson(gallery))
+        .map<GalleryModel>((gallery) => GalleryModel.fromJson(gallery))
         .toList();
   }
 
