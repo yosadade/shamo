@@ -1,8 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:shamo/models/product_model.dart';
 import 'package:shamo/theme.dart';
 
 class ProductPage extends StatefulWidget {
+
+  final ProductModel product;
+
+  ProductPage(this.product);
+
   @override
   _ProductPageState createState() => _ProductPageState();
 }
