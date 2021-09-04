@@ -1,27 +1,30 @@
+
+
 import 'package:shamo/models/category_model.dart';
 import 'package:shamo/models/galery_model.dart';
 
 class ProductModel {
-  late int id;
-  late String name;
-  late double price;
-  late String description;
-  late String tags;
-  late CategoryModel category;
-  late DateTime createdAt;
-  late DateTime updateAt;
-  late List<GalleryModel> galleries;
+  int? id;
+  String? name;
+  double? price;
+  String? description;
+  String? tags;
+  CategoryModel? category;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  List<GalleryModel>? galleries;
 
-  ProductModel(
-      {required this.id,
-      required this.name,
-      required this.price,
-      required this.description,
-      required this.tags,
-      required this.category,
-      required this.createdAt,
-      required this.updateAt,
-      required this.galleries});
+  ProductModel({
+    this.id,
+    this.name,
+    this.price,
+    this.description,
+    this.tags,
+    this.category,
+    this.createdAt,
+    this.updatedAt,
+    this.galleries,
+  });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -29,17 +32,14 @@ class ProductModel {
     price = double.parse(json['price'].toString());
     description = json['description'];
     tags = json['tags'];
-    // object
     category = CategoryModel.fromJson(json['category']);
-    createdAt = DateTime.parse(json['createdAt']);
-    updateAt = DateTime.parse(json['updateAt']);
-    // array harus di map
     galleries = json['galleries']
         .map<GalleryModel>((gallery) => GalleryModel.fromJson(gallery))
         .toList();
+    createdAt = DateTime.parse(json['created_at']);
+    updatedAt = DateTime.parse(json['updated_at']);
   }
 
-  // function toJson
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -47,10 +47,12 @@ class ProductModel {
       'price': price,
       'description': description,
       'tags': tags,
-      'category': category.toJson(),
-      'createdAt': createdAt.toString(),
-      'updateAt': updateAt.toString(),
-      'galleries': galleries.map((gallery) => gallery.toJson()).toList(),
+      'category': category!.toJson(),
+      'galleries': galleries!.map((gallery) => gallery.toJson()).toList(),
+      'created_at': createdAt.toString(),
+      'updated_at': updatedAt.toString(),
     };
   }
 }
+
+class UninitializedProductModel extends ProductModel {}
