@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shamo/providers/cart_provider.dart';
 import 'package:shamo/theme.dart';
 import 'package:shamo/widgets/checkout_card.dart';
 
 class CheckoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+
     Widget content() {
       return ListView(
         padding: EdgeInsets.symmetric(horizontal: defaultMargin),
@@ -19,7 +23,9 @@ class CheckoutPage extends StatelessWidget {
                   style: primaryTextStyle.copyWith(
                       fontSize: 16, fontWeight: medium),
                 ),
-                CheckoutCard(),
+                Column(
+                    children:
+                        cartProvider.carts.map((cart) => CheckoutCard(cart)).toList()),
               ],
             ),
           ),
@@ -118,10 +124,10 @@ class CheckoutPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Product',
+                    Text('Product Quantity',
                         style: secondaryTextStyle.copyWith(
                             fontSize: 12, fontWeight: regular)),
-                    Text('2 Items',
+                    Text('${cartProvider.totalItems()} Items',
                         style: primaryTextStyle.copyWith(
                             fontSize: 14, fontWeight: medium)),
                   ],
@@ -135,7 +141,7 @@ class CheckoutPage extends StatelessWidget {
                     Text('Product Price',
                         style: secondaryTextStyle.copyWith(
                             fontSize: 12, fontWeight: regular)),
-                    Text('\$575.96',
+                    Text('\$${cartProvider.totalPrice()}',
                         style: primaryTextStyle.copyWith(
                             fontSize: 14, fontWeight: medium)),
                   ],
@@ -167,7 +173,7 @@ class CheckoutPage extends StatelessWidget {
                     Text('Total',
                         style: priceTextStyle.copyWith(
                             fontSize: 14, fontWeight: semiBold)),
-                    Text('Free',
+                    Text('\$${cartProvider.totalPrice()}',
                         style: priceTextStyle.copyWith(
                             fontSize: 14, fontWeight: semiBold)),
                   ],
@@ -175,21 +181,24 @@ class CheckoutPage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: defaultMargin,),
-                Divider(thickness: 0.5, color: subtitleColor),
+          SizedBox(
+            height: defaultMargin,
+          ),
+          Divider(thickness: 0.5, color: subtitleColor),
           Container(
             margin: EdgeInsets.symmetric(vertical: defaultMargin),
             height: 50,
             width: double.infinity,
             decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.circular(12)
-            ),
+                color: primaryColor, borderRadius: BorderRadius.circular(12)),
             child: TextButton(
-              onPressed: (){
-                Navigator.pushNamedAndRemoveUntil(context, '/checkout-success', (route) => false);
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/checkout-success', (route) => false);
               },
-              child: Text('Checkout Now', style: primaryTextStyle.copyWith(fontSize: 16, fontWeight: semiBold)),
+              child: Text('Checkout Now',
+                  style: primaryTextStyle.copyWith(
+                      fontSize: 16, fontWeight: semiBold)),
             ),
           )
         ],

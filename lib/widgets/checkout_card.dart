@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shamo/models/cart_model.dart';
 import 'package:shamo/theme.dart';
 
 class CheckoutCard extends StatelessWidget {
+
+  final CartModel cart;
+  CheckoutCard(this.cart); 
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,7 +25,7 @@ class CheckoutCard extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
-                      image: AssetImage('assets/image_shoes.png'))),
+                      image: NetworkImage(cart.product!.galleries![0].url))),
             ),
             SizedBox(width: 12),
             Expanded(
@@ -28,14 +33,14 @@ class CheckoutCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Terrex Urban Low',
+                    cart.product!.name!,
                     style: primaryTextStyle.copyWith(
                         fontSize: 14, fontWeight: semiBold),
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 2),
                   Text(
-                    '\$143,98',
+                    '\$${cart.product!.price}',
                     style: priceTextStyle.copyWith(
                         fontSize: 14, fontWeight: regular),
                   ),
@@ -43,7 +48,7 @@ class CheckoutCard extends StatelessWidget {
               ),
             ),
             SizedBox(width: 12),
-            Text('2 items',
+            Text('${cart.quantity} items',
                 style: secondaryTextStyle.copyWith(
                     fontSize: 12, fontWeight: regular))
           ],

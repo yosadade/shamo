@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shamo/providers/cart_provider.dart';
 import 'package:shamo/theme.dart';
-import 'package:shamo/widgets/card_cart.dart';
+import 'package:shamo/widgets/cart_card.dart';
 
 class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+
     Widget emptyCart() {
       return Center(
         child: Column(
@@ -50,9 +55,7 @@ class CartPage extends StatelessWidget {
     Widget content() {
       return ListView(
         padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-        children: [
-          CartCard(),
-        ],
+        children: cartProvider.carts.map((cart) => CartCard(cart)).toList()
       );
     }
 
@@ -68,7 +71,7 @@ class CartPage extends StatelessWidget {
                 Text('Subtotal',
                     style: primaryTextStyle.copyWith(
                         fontSize: 14, fontWeight: semiBold)),
-                Text('\$287,96',
+                Text('\$${cartProvider.totalPrice()}',
                     style: priceTextStyle.copyWith(
                         fontSize: 14, fontWeight: regular)),
               ],
@@ -121,8 +124,8 @@ class CartPage extends StatelessWidget {
         ),
         elevation: 0,
       ),
-      body: content(),
-      bottomNavigationBar: customBottomNav(),
+      body: cartProvider.carts.length == 0 ? emptyCart() :content(),
+      bottomNavigationBar: cartProvider.carts.length == 0 ? SizedBox() : customBottomNav(),
     );
   }
 }
