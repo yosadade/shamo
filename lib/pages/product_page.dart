@@ -2,12 +2,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shamo/models/product_model.dart';
+import 'package:shamo/pages/detail_chat.dart';
 import 'package:shamo/providers/wishlist_provider.dart';
 import 'package:shamo/providers/cart_provider.dart';
 import 'package:shamo/theme.dart';
 
 class ProductPage extends StatefulWidget {
-
   final ProductModel product;
 
   ProductPage(this.product);
@@ -227,30 +227,30 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                          wishlistProvider.setProduct(widget.product);
-                          if (wishlistProvider.isWishlist(widget.product)) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              duration: Duration(milliseconds: 1000),
-                              backgroundColor: secondaryColor,
-                              content: Text(
-                                'Has been added to the Whitelist',
-                                style: alertkTextStyle.copyWith(
-                                    fontSize: 12, fontWeight: regular),
-                                textAlign: TextAlign.center,
-                              ),
-                            ));
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              duration: Duration(milliseconds: 1000),
-                              backgroundColor: alertColor,
-                              content: Text(
-                                'Has been removed from the Whitelist',
-                                style: alertkTextStyle.copyWith(
-                                    fontSize: 12, fontWeight: regular),
-                                textAlign: TextAlign.center,
-                              ),
-                            ));
-                          }
+                        wishlistProvider.setProduct(widget.product);
+                        if (wishlistProvider.isWishlist(widget.product)) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            duration: Duration(milliseconds: 1000),
+                            backgroundColor: secondaryColor,
+                            content: Text(
+                              'Has been added to the Whitelist',
+                              style: alertkTextStyle.copyWith(
+                                  fontSize: 12, fontWeight: regular),
+                              textAlign: TextAlign.center,
+                            ),
+                          ));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            duration: Duration(milliseconds: 1000),
+                            backgroundColor: alertColor,
+                            content: Text(
+                              'Has been removed from the Whitelist',
+                              style: alertkTextStyle.copyWith(
+                                  fontSize: 12, fontWeight: regular),
+                              textAlign: TextAlign.center,
+                            ),
+                          ));
+                        }
                       },
                       child: Image.asset(
                         wishlistProvider.isWishlist(widget.product)
@@ -295,8 +295,7 @@ class _ProductPageState extends State<ProductPage> {
                           fontSize: 14, fontWeight: medium),
                     ),
                     SizedBox(height: 12),
-                    Text(
-                        widget.product.description!,
+                    Text(widget.product.description!,
                         style: subtitleTextStyle.copyWith(
                             fontSize: 14, fontWeight: light),
                         textAlign: TextAlign.justify),
@@ -343,9 +342,9 @@ class _ProductPageState extends State<ProductPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/detail-chat');
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => DetailChat(widget.product)));
                     },
-                                      child: Container(
+                    child: Container(
                       width: 54,
                       height: 54,
                       decoration: BoxDecoration(
